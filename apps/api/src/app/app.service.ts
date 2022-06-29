@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-
-interface Todo {
-  id: number;
-  text: string;
-  done: boolean;
-}
+import { Todo } from '@mp-todos/shared-types';
+// interface Todo {
+//   id: number;
+//   text: string;
+//   done: boolean;
+// }
 
 @Injectable()
 export class AppService {
