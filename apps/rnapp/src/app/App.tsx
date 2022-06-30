@@ -1,16 +1,21 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   StatusBar,
-  Text
+  Text,
+  View,
+  TouchableOpacity
 } from 'react-native';
 
+import { useTodos } from '@mp-todos/data-access';
+
 export const App = () => {
-  const [whatsNextYCoord, setWhatsNextYCoord] = useState<number>(0);
+  const { todos, getTodos} = useTodos()
   const scrollViewRef = useRef<null | ScrollView>(null);
+  const onRefresh = useCallback(() => getTodos(), [getTodos])
 
   return (
     <>
@@ -23,7 +28,14 @@ export const App = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}
         >
-          <Text>Hello</Text>
+          {todos.map((todo) => (
+            <View key={todo.id}>
+              <Text style={{fontSize: 36, padding: 4}} >{todo.text}</Text>
+            </View>
+          ))}
+          <TouchableOpacity onPress={onRefresh}>
+            <Text>Refresh</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     </>
